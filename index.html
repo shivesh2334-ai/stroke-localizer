@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stroke Localizer – Harrison Ch.426–429</title>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--tx:#1b2430;--mu:#5b6676;--bd:#dde2e9;--ac:#0b6e99;--ac2:#e3f1f8;--wn:#b4232c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12171d;--card:#1b222b;--tx:#e8edf3;--mu:#9aa6b5;--bd:#303a46;--ac:#5cb8e0;--ac2:#18333f;--wn:#ff8a8f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12171d;--card:#1b222b;--tx:#e8edf3;--mu:#9aa6b5;--bd:#303a46;--ac:#5cb8e0;--ac2:#18333f;--wn:#ff8a8f;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{padding:14px 16px 4px}h1{font-size:19px;margin:0}header p{margin:2px 0 0;color:var(--mu);font-size:12.5px}
+nav{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav button{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 12px;border-radius:20px;white-space:nowrap;font-size:14px}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+main{padding:8px 12px 40px;max-width:860px;margin:auto}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:10px 0}
+h2{font-size:15px;margin:0 0 8px}h3{font-size:13px;color:var(--ac);text-transform:uppercase;letter-spacing:.04em;margin:12px 0 4px}
+.g label{display:flex;gap:8px;align-items:flex-start;padding:6px 4px;border-bottom:1px solid var(--bd);font-size:14px}.g label:last-child{border:0}
+input[type=checkbox]{width:20px;height:20px;flex:none;margin-top:1px}
+select,input[type=search]{width:100%;padding:10px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx);font-size:15px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pill{display:inline-block;background:var(--ac2);color:var(--ac);border-radius:10px;padding:1px 8px;font-size:12px;margin:0 4px 4px 0}
+.bar{height:6px;background:var(--bd);border-radius:4px;overflow:hidden;margin:4px 0 8px}.bar i{display:block;height:100%;background:var(--ac)}
+details summary{cursor:pointer;font-weight:600}.warn{color:var(--wn);font-weight:600}
+.btn{border:0;background:var(--ac);color:#fff;border-radius:10px;padding:10px 14px;font-size:14px}.btn.s{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
+ul{margin:4px 0 4px 18px;padding:0}small,.mu{color:var(--mu)}
+</style></head><body>
+<header><h1>Stroke Localizer</h1><p>Harrison’s 21st ed., Ch. 426–429 · history + exam → territory → causes → tests → treatment</p></header>
+<nav id="nav"></nav><main id="m"></main>
+<script>
+const F=[
+["hp","Contralateral face + arm weakness (≥ leg)","Motor"],["hl","Contralateral leg weakness > arm","Motor"],["hpl","Pure motor hemiparesis (face, arm, leg equal)","Motor"],["dy","Dysarthria / clumsy hand","Motor"],["bil","Bilateral long-tract signs / quadriparesis","Motor"],
+["sn","Contralateral hemisensory loss","Sensory"],["prop","Contralateral loss of proprioception/touch, face spared","Sensory"],["ifp","Ipsilateral face pain/numbness + contralateral body pain/temp loss","Sensory"],["th","Thalamic sensory loss, later burning pain","Sensory"],
+["ma","Non-fluent (Broca) aphasia","Cortical"],["wa","Fluent (Wernicke) aphasia, poor comprehension","Cortical"],["ga","Global aphasia","Cortical"],["ne","Neglect / anosognosia / constructional apraxia","Cortical"],["ab","Abulia, urinary incontinence, grasp reflex","Cortical"],["alx","Alexia without agraphia / memory defect","Cortical"],
+["hh","Homonymous hemianopia","Vision"],["sq","Superior quadrantanopia","Vision"],["mac","Hemianopia with macular sparing","Vision"],["cb","Cortical blindness / denies blindness","Vision"],["afx","Transient monocular blindness (amaurosis fugax)","Vision"],
+["gz","Gaze preference toward lesion","Eye / cranial"],["n3","CN III palsy (eye down and out, dilated pupil)","Eye / cranial"],["vg","Vertical gaze palsy / somnolence","Eye / cranial"],["cg","Ipsilateral conjugate gaze palsy / diplopia","Eye / cranial"],["ino","Internuclear ophthalmoplegia","Eye / cranial"],["hs","Ipsilateral Horner syndrome","Eye / cranial"],["fp","Ipsilateral facial weakness (LMN)","Eye / cranial"],["dea","Ipsilateral deafness / tinnitus","Eye / cranial"],["ton","Ipsilateral tongue weakness","Eye / cranial"],["dys","Dysphagia, hoarseness, ↓gag","Eye / cranial"],
+["vt","Vertigo, nystagmus, nausea/vomiting","Cerebellar / general"],["ata","Ipsilateral limb/gait ataxia","Cerebellar / general"],["hv","Occipital headache + vomiting + gait ataxia","Cerebellar / general"],["thd","Sudden thunderclap (worst) headache, neck stiffness","Cerebellar / general"],["loc","Declining consciousness","Cerebellar / general"],["coma","Coma / locked-in / pupillary abnormality","Cerebellar / general"]];
+const FL=Object.fromEntries(F.map(f=>[f[0],f[1]]));
+const XI="Non-contrast CT head first; CTA head/neck (± CT perfusion/MRI-DWI); ECG + telemetry; echo; glucose, CBC, lipids, PT/INR, aPTT, ESR; 30-day rhythm monitor if cryptogenic.";
+const XT="Airway/BP/glucose; IV alteplase 0.9 mg/kg (max 90 mg; 10% bolus, rest over 1 h) or tenecteplase 0.25 mg/kg if ≤4.5 h and eligible; thrombectomy for ICA/M1/basilar occlusion. Aspirin 160–325 mg after 24 h; statin (atorvastatin 80 mg); treat cause.";
+const S=[
+{n:"MCA superior division (dominant hemisphere)",a:"Middle cerebral artery",r:"Frontal + superior parietal cortex, Broca area, motor/sensory cortex of face/arm",c:"Cardiac embolism (AF), artery-to-artery embolus, intracranial atherosclerosis",f:["hp","ma","sn"],i:XI,t:XT},
+{n:"MCA inferior division (dominant hemisphere)",a:"Middle cerebral artery",r:"Posterior temporal (Wernicke) cortex, inferior parietal, optic radiation",c:"Embolism: heart (AF, MI, valves) or carotid; endocarditis if septic",f:["wa","sq","hh"],i:XI+" Blood cultures if fever/murmur.",t:XT},
+{n:"MCA inferior division (non-dominant)",a:"Middle cerebral artery",r:"Non-dominant parietal lobe + optic radiation",c:"Cardiac or artery-to-artery embolism",f:["ne","hh","sq"],i:XI,t:XT},
+{n:"MCA stem occlusion",a:"Middle cerebral artery (M1)",r:"Large hemispheric infarct, deep gray + white matter",c:"Embolus (heart, carotid) more than local atherothrombosis",f:["hp","sn","hh","gz","ga","ne"],i:XI+" Watch for malignant edema (days 2–3).",t:XT+" Hemicraniectomy for malignant edema (age ≤60 benefits most)."},
+{n:"Lacunar syndrome (lenticulostriate / small vessel)",a:"Penetrating arteries (MCA stem, Willis, basilar)",r:"Internal capsule, pons, thalamus, corona radiata",c:"Lipohyalinosis from hypertension, diabetes, age; embolus can mimic",f:["hpl","dy","sn"],i:"CT/MRI-DWI; still screen carotids and heart (large-vessel source can look lacunar).",t:"BP control (<130/80), statin, antiplatelet; acute lysis as per eligibility. Recovery usually good."},
+{n:"Internal carotid artery occlusion",a:"Internal carotid artery",r:"MCA ± ACA territory; ophthalmic artery to retina",c:"Carotid atherosclerosis, dissection, embolus",f:["afx","hp","sn","ga","hh","ne"],i:XI+" Carotid duplex/CTA; check bruit.",t:XT+" Symptomatic stenosis ≥70% → endarterectomy within 2 weeks; stent if high surgical risk. Best medical therapy."},
+{n:"Anterior cerebral artery",a:"Anterior cerebral artery (A1/A2)",r:"Medial frontal lobe, paracentral lobule, corpus callosum",c:"Embolism, local atherosclerosis; surgical clipping/vasospasm after anterior communicating aneurysm",f:["hl","ab","sn"],i:XI,t:XT+" Bilateral A2 from single stem → abulia, paraparesis."},
+{n:"PCA – P2 syndrome (cortical)",a:"Posterior cerebral artery (distal)",r:"Medial temporal + occipital lobes, calcarine cortex, splenium",c:"Embolus (heart, vertebrobasilar), basilar-top embolus",f:["hh","mac","alx","cb"],i:XI+" Vertebrobasilar imaging (CTA/MRA).",t:XT},
+{n:"PCA – P1 / thalamic-midbrain syndrome",a:"Posterior cerebral artery (proximal) / thalamoperforators",r:"Thalamus, subthalamus, midbrain",c:"Atheroma at basilar top, embolus; small-vessel disease",f:["th","n3","vg","sn"],i:XI,t:XT+" Thalamic pain (Déjérine-Roussy): carbamazepine, gabapentin, TCAs."},
+{n:"Bilateral PCA / top of the basilar",a:"Basilar artery apex",r:"Bilateral occipital, thalamus, midbrain",c:"Embolus to basilar top",f:["cb","vg","coma","bil"],i:"Urgent CTA; hyperdense basilar sign on CT.",t:"Thrombectomy (up to 24 h) and/or IV thrombolysis; very high mortality if untreated."},
+{n:"Lateral medullary (Wallenberg)",a:"Vertebral artery (V4) / PICA",r:"Lateral medulla",c:"Vertebral atherothrombosis, dissection (neck trauma/manipulation)",f:["vt","hs","ifp","dys","ata"],i:XI.replace("CTA head/neck","CTA head/neck (look for vertebral dissection)")+" MRI-DWI (CT misses posterior fossa).",t:"As ischemic stroke; dissection → antiplatelet or anticoagulant; swallow assessment/aspiration precautions."},
+{n:"Medial medullary syndrome",a:"Vertebral / anterior spinal artery",r:"Medullary pyramid, medial lemniscus, CN XII",c:"Vertebral atherothrombosis",f:["ton","hpl","prop"],i:XI+" MRI-DWI.",t:XT},
+{n:"Lateral inferior pontine (AICA)",a:"Anterior inferior cerebellar artery",r:"Lateral inferior pons, vestibulocochlear and facial nuclei",c:"Basilar branch atherosclerosis; embolus",f:["dea","fp","vt","ata","ifp"],i:XI+" MRI-DWI, vertebrobasilar CTA.",t:XT},
+{n:"Medial inferior pontine",a:"Paramedian branch of basilar",r:"Abducens nucleus, PPRF, corticospinal tract, medial lemniscus",c:"Basilar branch disease",f:["cg","ata","vt","hp","prop"],i:XI,t:XT},
+{n:"Superior cerebellar / superior pontine",a:"Superior cerebellar artery",r:"Superior cerebellar peduncle, lateral tegmentum, MLF",c:"Embolus to basilar top; basilar atheroma",f:["ata","vt","hs","ino","ifp"],i:XI,t:XT},
+{n:"Medial midbrain (Weber/Claude)",a:"Upper basilar / proximal PCA paramedian branches",r:"CN III fascicle, crus cerebri, red nucleus",c:"Basilar-top embolus or small-vessel disease",f:["n3","hp","ata"],i:XI,t:XT},
+{n:"Basilar artery occlusion",a:"Basilar artery",r:"Pons, midbrain, cerebellum, thalami",c:"Proximal atherothrombosis (preceded by stuttering TIAs), embolus, dissection",f:["bil","coma","cg","ino","vt"],i:"Emergency CTA/MRA; do not wait for MRI.",t:"Thrombectomy (safe up to 24 h); IV lysis if eligible; heparin or antiplatelets if not; locked-in = preserved consciousness, quadriplegia."},
+{n:"Cerebellar infarct or hemorrhage",a:"PICA / SCA / AICA, or hypertensive bleed",r:"Cerebellar hemisphere ± brainstem compression",c:"Vertebral dissection, embolism; hypertension, anticoagulants",f:["hv","vt","ata","cg","loc"],i:"CT (MRI for infarct); CTA for vertebral dissection.",t:"Neurosurgery early: suboccipital decompression for deteriorating infarct; hematoma >3 cm or hydrocephalus needs evacuation. Avoid ventricular drain alone."},
+{n:"Hypertensive putaminal ICH",a:"Lenticulostriate (small penetrating) arteries",r:"Putamen + internal capsule",c:"Chronic hypertension, anticoagulation, cocaine/amphetamine, amyloid (lobar)",f:["hp","sn","gz","hh","loc"],i:"Non-contrast CT; platelets, PT/INR, aPTT; CTA if young or atypical site; calculate ICH score.",t:"No lysis. SBP target 140 (safe lowering with nicardipine/labetalol); reverse coagulopathy (PCC + vit K; idarucizumab; andexanet/PCC); ICP care; surgery for cerebellar or deteriorating cases."},
+{n:"Subarachnoid hemorrhage (aneurysmal)",a:"Circle of Willis saccular aneurysm",r:"Subarachnoid space, basal cisterns",c:"Berry aneurysm rupture (ACom, PCom, MCA bifurcation, basilar top); AVM",f:["thd","loc","vt"],i:"Urgent non-contrast CT (<6 h very sensitive); if negative and suspicion high → lumbar puncture (xanthochromia); CTA/DSA. Grade Hunt-Hess/WFNS.",t:"Secure aneurysm (coil/clip) within 24 h; nimodipine 60 mg q4h; SBP <160 pre-repair; ventricular drain for hydrocephalus; treat hyponatremia with saline (no fluid restriction); watch vasospasm days 4–14 (TCD, induced hypertension)."}
+];
+const nav=document.getElementById("nav"),m=document.getElementById("m");
+const tabs=[["loc","Localize"],["srch","Search"],["acute","Acute pathway"],["learn","Reference"]];let cur="loc";const sel=new Set();let st={on:"",ct:"",tia:""};
+nav.innerHTML=tabs.map(t=>`<button data-t="${t[0]}">${t[1]}</button>`).join("");
+nav.onclick=e=>{if(e.target.dataset.t){cur=e.target.dataset.t;render()}};
+function card(s,hits){const tot=s.f.length;const h=hits?`<div class="bar"><i style="width:${hits.length/tot*100}%"></i></div><small>Matched ${hits.length}/${tot}: ${hits.map(x=>FL[x]).join("; ")}</small>`:"";
+return `<div class="card"><details ${hits?"open":""}><summary>${s.n}</summary>${h}
+<h3>Artery</h3>${s.a}<h3>Region</h3>${s.r}<h3>Likely causes</h3>${s.c}<h3>Typical findings</h3>${s.f.map(x=>`<span class="pill">${FL[x]}</span>`).join("")}<h3>Investigations</h3>${s.i}<h3>Treatment</h3>${s.t}</details></div>`}
+function loc(){const gr=[...new Set(F.map(f=>f[2]))];
+let h=`<div class="card"><h2>History</h2><div class="row"><div><small>Onset (last seen normal)</small><select id="on"><option value="">Select</option><option value="a">≤ 4.5 h</option><option value="b">4.5–24 h</option><option value="c">&gt; 24 h</option></select></div><div><small>Course</small><select id="tia"><option value="">Select</option><option value="o">Ongoing deficit</option><option value="t">Resolved (TIA)</option></select></div></div><div style="margin-top:8px"><small>Head CT</small><select id="ct"><option value="">Not done</option><option value="n">No hemorrhage</option><option value="h">Hemorrhage</option></select></div></div>`;
+h+=`<div class="card"><h2>Neurologic examination</h2>`+gr.map(g=>`<h3>${g}</h3><div class="g">${F.filter(f=>f[2]==g).map(f=>`<label><input type="checkbox" data-f="${f[0]}" ${sel.has(f[0])?"checked":""}>${f[1]}</label>`).join("")}</div>`).join("")+`<p><button class="btn s" id="clr">Clear</button></p></div><div id="res"></div>`;return h}
+function res(){const r=document.getElementById("res");if(!r)return;let out="";
+if(st.ct=="h")out+=`<div class="card"><b class="warn">Hemorrhage on CT</b> – see ICH/SAH syndromes below; no thrombolysis. Lower SBP to ~140 if ICH, <160 if SAH pre-repair; reverse anticoagulation.</div>`;
+else if(st.tia=="t")out+=`<div class="card"><b>TIA (normal exam possible):</b> a normal exam does not exclude TIA. Localize from the transient symptoms (e.g., language loss + right hemianopia → search for left MCA emboli). Isolated right ICA stenosis in that patient suggests an asymptomatic stenosis; keep searching (heart, aortic arch, left carotid, vertebrobasilar). Stroke risk 10–15% at 3 months, mostly in first 2 days: urgent workup, ABCD² score, aspirin + clopidogrel for 21–90 days if minor stroke/high-risk TIA.</div>`;
+if(!sel.size){r.innerHTML=out+`<div class="card mu">Tick the findings to rank syndromes.</div>`;return}
+const L=S.map(s=>({s,h:s.f.filter(x=>sel.has(x))})).filter(x=>x.h.length).sort((a,b)=>b.h.length-a.h.length||b.h.length/b.s.f.length-a.h.length/a.s.f.length).slice(0,5);
+out+=`<h2 style="margin:12px 4px 0">Most likely localizations</h2>`+(L.length?L.map(x=>card(x.s,x.h)).join(""):`<div class="card">No match.</div>`);
+const ctx=[];if(sel.has("hh")&&sel.has("ma")||sel.has("hh")&&sel.has("wa"))ctx.push("Language loss with right hemianopia → left MCA embolic source.");
+if(sel.has("ne")||sel.has("hh")&&!sel.has("ma")&&!sel.has("wa")&&!sel.has("ga"))ctx.push("No aphasia with neglect/hemianopia suggests non-dominant (usually right) hemisphere.");
+if(sel.has("bil")||sel.has("coma"))ctx.push("Bilateral signs or depressed consciousness: consider basilar occlusion; image immediately.");
+out+=ctx.length?`<div class="card"><h2>Notes</h2><ul>${ctx.map(c=>`<li>${c}</li>`).join("")}</ul></div>`:"";
+r.innerHTML=out}
+function srch(){return `<div class="card"><input type="search" id="q" placeholder="e.g. basilar, medulla, hemianopia, dissection, AF, Horner…"></div><div id="sr"></div>`}
+function doS(){const q=document.getElementById("q").value.toLowerCase().trim();const e=document.getElementById("sr");
+const L=S.filter(s=>!q||(s.n+s.a+s.r+s.c+s.i+s.t+s.f.map(x=>FL[x]).join(" ")).toLowerCase().includes(q));
+e.innerHTML=`<small style="padding:0 4px">${L.length} result(s)</small>`+L.map(s=>card(s)).join("")}
+function acute(){return `<div class="card"><h2>Suspected acute stroke</h2><ol><li>ABCs, glucose, time last seen normal; pre-hospital alert, code stroke.</li><li>Urgent non-contrast CT: ischemic (~85%) vs hemorrhage (~15%).</li><li><b>Ischemic ≤4.5 h:</b> IV rtPA if eligible (age ≥18, no hemorrhage, BP &lt;185/110, no bleeding diathesis, no major surgery &lt;14 d, no GI bleed &lt;21 d, no recent MI/head injury). Then CTA.</li><li><b>ICA / M1-2 / basilar occlusion:</b> thrombectomy (&lt;6 h; 6–24 h with favorable perfusion imaging).</li><li>BP: permissive unless &gt;220/120 (or &gt;185/110 if lysis); no antithrombotics for 24 h after lysis.</li><li>Treat fever and glucose (keep 3.3–10 mmol/L); DVT prophylaxis (pneumatic compression).</li><li>Establish cause: AF → OAC (apixaban); carotid stenosis → CEA/stent; PFO → closure/antiplatelet; atherosclerosis → antiplatelet + atorvastatin 80 mg.</li><li>Rehab, stroke unit, discharge planning.</li></ol></div>
+<div class="card"><h2>Hemorrhage</h2><ul><li>ICH: SBP target ~140; correct INR (PCC + vit K), platelets &lt;50k transfuse; ICH score (age, volume, IVH, infratentorial, GCS).</li><li>SAH: Hunt-Hess/WFNS; secure aneurysm &lt;24 h; nimodipine; monitor Na.</li></ul></div>
+<div class="card"><h2>ABCD² (TIA)</h2><p>Age ≥60 (1), BP ≥140/90 (1), Clinical: unilateral weakness (2) / speech only (1), Duration ≥60 min (2) / 10–59 (1), Diabetes (1). Score 0–7; 3-month stroke risk 0→~0%, 4→8%, 5→12%, 6→17%, 7→22%.</p></div>
+<div class="card"><h2>Secondary prevention (CHA₂DS₂-VASc)</h2><p>AF: score 0 aspirin/none, 1 aspirin or OAC, ≥2 OAC. Carotid: symptomatic ≥70% → CEA within 2 weeks. Statin, BP &lt;130/80, stop smoking, glycemic control.</p></div>`}
+function learn(){return `<div class="card"><h2>Territories</h2><ul><li><b>MCA:</b> lateral hemisphere; stem → contralateral hemiplegia, hemianesthesia, hemianopia, gaze to ipsilateral side; dominant: aphasia; non-dominant: neglect.</li><li><b>ACA:</b> medial frontal, leg weakness, abulia.</li><li><b>PCA:</b> occipital, medial temporal, thalamus.</li><li><b>Vertebrobasilar:</b> brainstem, cerebellum; crossed signs (ipsilateral cranial nerve + contralateral long tract).</li></ul></div><div class="card"><h2>Mechanisms</h2><p>Cardioembolism (~20%; AF most common), artery-to-artery embolus, small-vessel (~20%), carotid atherosclerosis (~10%), dissection (young), hypercoagulable states, vasculitis, PFO. ~30% remain unexplained.</p></div><div class="card"><h2>Imaging</h2><p>CT first; MRI-DWI most sensitive for early infarct and posterior fossa; CTA/MRA vessels; CT perfusion shows penumbra; angiography gold standard; duplex/TCD for stenosis.</p></div><div class="card mu"><small>Educational decision support based on Harrison’s Principles of Internal Medicine, Chapters 426–429. It does not replace clinical judgment or current local guidelines.</small></div>`}
+function render(){[...nav.children].forEach(b=>b.classList.toggle("on",b.dataset.t==cur));
+m.innerHTML=({loc,srch,acute,learn})[cur]();
+if(cur=="loc"){for(const k of["on","ct","tia"]){const e=document.getElementById(k);e.value=st[k];e.onchange=()=>{st[k]=e.value;res()}}
+m.querySelectorAll("input[data-f]").forEach(c=>c.onchange=()=>{c.checked?sel.add(c.dataset.f):sel.delete(c.dataset.f);res()});
+document.getElementById("clr").onclick=()=>{sel.clear();render()};res()}
+if(cur=="srch"){document.getElementById("q").oninput=doS;doS()}
+if(cur=="loc"&&st.on)addOnset()}
+function addOnset(){}
+render();
+</script></body></html>
